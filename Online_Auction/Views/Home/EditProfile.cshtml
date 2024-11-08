@@ -1,0 +1,171 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_FrontHeader.cshtml";
+}
+@model Online_Auction.Models.Register;
+
+<style>
+    .card {
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1rem;
+    }
+
+    .gutters-sm {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
+
+        .gutters-sm > .col, .gutters-sm > [class*=col-] {
+            padding-right: 8px;
+            padding-left: 8px;
+        }
+
+    .mb-3, .my-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    .bg-gray-300 {
+        background-color: #e2e8f0;
+    }
+
+    .h-100 {
+        height: 100% !important;
+    }
+
+    .shadow-none {
+        box-shadow: none !important;
+    }
+
+    .side-img {
+        overflow: hidden;
+    }
+
+    .des {
+        font-size: 14px;
+        line-height: 16px;
+        margin-top: 7px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        word-wrap: break-word;
+    }
+
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: 0;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, .125);
+    }
+
+    .profile-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .profile-picture-container {
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        border: 1px solid hsl(230, 25%, 80%);
+        border-radius: .5rem;
+        width: 150px;
+        height: 150px;
+    }
+</style>
+
+<section class="section pt-5" id="product">
+    <div class="container">
+        <div class="main-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <div class="container-fluid">
+                                    <div class="row p-2 d-flex justify-content-center">
+                                        <h4>Edit your Profile</h4>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="@Url.Action("EditProfileSubmit", "Home")" method="post" enctype="multipart/form-data">
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Profile Picture</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <label for="profile-picture1" class="profile-picture-container">
+                                            <div class="profile-picture-preview">
+                                                <img id="profile-picture-preview1" src="~/images/@Model.ProfilePicture" alt="Profile Picture">
+                                            </div>
+                                            <input type="file" asp-for="ProfileImage" id="profile-picture1" class="profile-picture-input" accept="image/*">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Full Name</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input asp-for="FullName" type="text" value="@Model.FullName" class="form-control" placeholder="Enter Your Name">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Phone Number</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input asp-for="number" value="@Model.PhoneNumber" class="form-control" placeholder="Enter Your Phone Number">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Address</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input asp-for="Address" value="@Model.Address" class="form-control" placeholder="Enter Your Home Address">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-9 text-secondary d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

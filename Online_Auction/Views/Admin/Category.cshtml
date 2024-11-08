@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Online_Auction.Models.CategoryWithProductCount>
+
+@{
+    var tempMessage = TempData["message"] as string;
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-4 mb-3">
+                <button type="button" id="add-category-btn" class="btn btn-primary">Add Category</button>
+            </div>
+        </div>
+        <div class="row" id="add-category">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Add Category</h4>
+                        <form class="forms-sample" action="add_category" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Category Name</label>
+                                <input type="text" class="form-control" required name="CatName" placeholder="Enter Category Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Category Description</label>
+                                <input type="text" class="form-control" required name="CatDes" placeholder="Enter Category Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Category Image</label>
+                                <input type="file" class="form-control" required name="CatImg" placeholder="Enter Category Name">
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        @if (!string.IsNullOrEmpty(tempMessage))
+        {
+            <div class="alert alert-danger mt-4" role="alert">
+                @tempMessage
+            </div>
+        }
+
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Categories</h4>
+               
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr style="background-color:#515763;">
+                                    <th style="color:white;">ID</th>
+                                    <th style="color:white;">Category Name</th>
+                                    <th style="color:white;">Description</th>
+                                    <th style="color:white;">Products</th>
+                                    <th style="color:white;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var list in Model){
+                                <tr>
+                                    <td>@Html.DisplayFor(x=>list.Category.CatId)</td>
+                                        <td>@Html.DisplayFor(x=>list.Category.CatName)</td>
+                                        <td>@Html.DisplayFor(x=>list.Category.CatDescription)</td>
+                                        <td>@Html.DisplayFor(x=>list.ProductCount)</td>
+                                    <td>
+                                         <a asp-action="Delete_Category" asp-route-id="@list.Category.CatId" type="button" class="btn btn-danger btn-sm">Delete</a>
+                                         <a asp-action="Edit_Category" asp-route-id="@list.Category.CatId" type="button" class="btn btn-primary btn-sm">Edit</a>
+                                         <a asp-action="Merge_Category" asp-route-id="@list.Category.CatId" type="button" class="btn btn-info btn-sm">Merge</a>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+           

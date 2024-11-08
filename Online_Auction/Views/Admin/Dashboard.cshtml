@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Online_Auction.Models.Products>
+<div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                   <h3 class="font-weight-bold">Welcome @ViewBag.UserName</h3>
+                    <h6 class="font-weight-normal mb-0">@ViewBag.NonActiveProducts New Items are waiting to be Active</h6>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin transparent">
+              <div class="row">
+                <div class="col-md-3 mb-4 stretch-card transparent">
+                  <div class="card card-tale">
+                    <div class="card-body">
+                      <p class="mb-4">Total Products</p>
+                      <p class="fs-30 mb-2">@ViewBag.TotalProducts</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 mb-4 stretch-card transparent">
+                  <div class="card card-dark-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Users</p>
+                      <p class="fs-30 mb-2">@ViewBag.TotalUsers</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 mb-4 stretch-card transparent">
+                  <div class="card card-light-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Today Sales</p>
+                      <p class="fs-30 mb-2">$@ViewBag.TotalCurrBidPrice</p>
+                    </div>
+                  </div>
+                </div>
+                    <div class="col-md-3 mb-4 stretch-card transparent">
+                  <div class="card card-light-danger">
+                    <div class="card-body">
+                      <p class="mb-4">Item Sold Today</p>
+                      <p class="fs-30 mb-2">@ViewBag.SoldItemCountToday</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title mb-0">Top Products</p>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Min Bid Amount</th>
+                                        <th>Current Bid Amount</th>
+                                        <th>Auction End Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var items in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(x=>items.ProductTitle)</td>
+                                            <td class="font-weight-bold">@Html.DisplayFor(x => items.MinBidPrice)</td>
+                                            <td class="font-weight-bold">@Html.DisplayFor(x => items.CurrBidPrice)</td>
+                                            <td>@Html.DisplayFor(x => items.AuctionEndDate)</td>
+                                            <td class="font-weight-medium"><div class="badge badge-success">@Html.DisplayFor(x => items.ProductStatus)</div></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                 <div class="d-flex justify-content-between">
+                  <p class="card-title">Sales Report</p>
+                  <a href="#" class="text-info">View all</a>
+                 </div>
+                  <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
+                  <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                  <canvas id="sales-chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

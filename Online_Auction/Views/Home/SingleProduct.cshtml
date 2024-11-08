@@ -1,0 +1,160 @@
+﻿@model Online_Auction.Models.Products;
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Register> SignInManager
+@inject UserManager<Register> UserManager
+@{
+    Layout = "~/Views/Shared/_FrontHeader.cshtml";
+    var Item = Model;
+    var CurrentUserId = UserManager.GetUserId(User);
+    var tempMessage = TempData["ErrorMessage"] as string;
+}
+
+<section class="section pt-5" id="product">
+        <div class="container">
+            <div class="row">
+            @if (!string.IsNullOrEmpty(tempMessage))
+            {
+                <div class="col-12 text-center">
+                    <div class="alert @(tempMessage == "Bid Placed Successfully" ? "alert-success" : "alert-danger") mt-4" role="alert">
+                        @tempMessage
+                    </div>
+                </div>
+            }
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                <div class="left-images">
+                    <div class="d-flex flex-column justify-content-center">
+                        <div class="main_image">
+                            <img src="~/images/@Item.ProductImage" id="main_product_image" width="100%">
+                        </div>
+                        <div class="thumbnail_images">
+                        <ul id="thumbnail">
+
+                                    <li><img onclick="changeImage(this)" src="~/images/@Item.ProductImage" width="70"></li>
+
+                                @if (!string.IsNullOrEmpty(Item.ProductImage1) && Item.ProductImage1 != "0")
+                                {
+                                    <li><img onclick="changeImage(this)" src="~/images/@Item.ProductImage1" width="70"></li>
+                                }
+                                @if (!string.IsNullOrEmpty(Item.ProductImage1) && Item.ProductImage2 != "0")
+                                {
+                                    <li><img onclick="changeImage(this)" src="~/images/@Item.ProductImage2" width="70"></li>
+                                }
+
+                            </ul>
+                        </div>	
+                    </div>	
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="right-content p-4">
+                    <h4>@Item.ProductTitle</h4>
+                    <span>@Item.ProductDescription</span>
+                    <div class="quantity-content">
+                        
+                        <div class="left-content">
+                            <h6>Min Bid :</h6>
+                        </div>
+                        <div class="right-content">
+                            <span class="price">$@Item.MinBidPrice</span>
+                        </div>
+
+                        <div class="left-content">
+                            <h6>Current Bid :</h6>
+                        </div>
+                        <div class="right-content">
+                            <span class="price">$@Item.CurrBidPrice</span>
+                        </div>
+
+                        <div class="left-content">
+                            <h6>End Date :</h6>
+                        </div>
+                        <div class="right-content">
+                            <span class="price">@Item.AuctionEndDate.Date.ToShortDateString()</span>
+                        </div>
+
+                        <div class="text-center">
+                            <span class="price mt-3"><a asp-action="BidHistory" asp-controller="Home" asp-route-id="@Item.ProductId" class="text-dark">View Bid History</a></span>
+                        </div>
+
+                    </div>
+                    
+                    @if (Item.ProductStatus == "active")
+                    {
+
+                        <div class="total d-flex justify-content-between align-items-center">
+                            <form action="@Url.Action("PlaceBid", "Home", new { Pid = Item.ProductId})" class="d-flex justify-content-between align-items-center" method="post">
+
+                                <input type="number" name="BidAmount" min="1" placeholder="Enter Bid">
+                                <button type="submit" class="main-border-button">Place Bid</button>
+
+                            </form>
+                        </div>
+                    }
+                    else if (Item.ProductStatus == "sold")
+                    {
+                        if (Item.SoldToUserId == CurrentUserId)
+                        {
+                            <div class="total total text-center">
+                                <h5>Item Sold to you</h5>
+                            </div>
+
+                            if (ViewBag.Rating <= 0 || ViewBag.Rating == null)
+                            {
+
+                            <div class="total total text-center">
+                                <h5>Rate Seller :</h5>
+
+                                <div class="rating-box">
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+
+                                <a id="SubmitRating" data-productId="@Item.ProductId" data-userId="@Item.UserId" class="btn btn-light mt-4 btn-outline-dark">Submit Rating</a>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="total total text-center">
+                                    <h5>You Already Rated Seller : @ViewBag.Rating</h5>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="total total text-center">
+                                <h2>Item Sold Already</h2>
+                            </div>
+                        }
+                    }
+                    
+                    <div class="sellerInfo">
+                        <span>Item by</span>
+                        <a asp-action="Profile" asp-controller="Home" asp-route-id="@Item.User.Id" class="text-dark"><h5>@Item.User.FullName</h5></a>
+                        <hr>
+                        <div class="InsideInfo d-flex justify-content-around">
+                            <div class="rating text-center">
+                                <span style="margin-top: 0;">Positive Seller Rating</span>
+                                <h4>@ViewBag.AverageRating %</h4>
+                            </div>
+                            <div class="vertical-line"></div>
+                            <div class="shipTime text-center">
+                                <span style="margin-top: 0;">Ship On Time</span>
+                                <h4>@ViewBag.AverageShipRating %</h4>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>

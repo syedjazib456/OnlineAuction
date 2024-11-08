@@ -1,0 +1,103 @@
+﻿@model Online_Auction.Models.Products;
+
+@{
+    Layout = "~/Views/Shared/_FrontHeader.cshtml";
+
+    string ImageSource = "~/images/placeholder-image.png";
+    string ImageSource1 = "~/images/placeholder-image.png";
+    string ImageSource2 = "~/images/placeholder-image.png";
+
+    if(Model.ProductImage != "0")
+    {
+        ImageSource = "~/images/" + Model.ProductImage;
+    }
+    if (Model.ProductImage1 != "0")
+    {
+        ImageSource1 = "~/images/" + Model.ProductImage1;
+    }
+    if (Model.ProductImage2 != "0")
+    {
+        ImageSource2 = "~/images/" + Model.ProductImage2;
+    }
+}
+
+
+<div class="SellAnItem_Div">
+
+    <form method="post" enctype="multipart/form-data" action="@Url.Action("EditItemNew","Home", new{Id = Model.ProductId})" class="login__form">
+
+        <h2 class="login__title text-center">Edit Item</h2>
+        <div class="login__group">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <div>
+                <label class="login__label">Title</label>
+                <input asp-for="ProductTitle" class="login__input" aria-required="true" placeholder="Enter Title Here" />
+                <span asp-validation-for="ProductTitle" class="text-danger"></span>
+            </div>
+            <div>
+                <label class="login__label">Description</label>
+                <textarea asp-for="ProductDescription" class="login__input" rows="4" placeholder="Enter Description Here"></textarea>
+                <span asp-validation-for="ProductDescription" class="text-danger"></span>
+            </div>
+            <div>
+                <label class="login__label">Category</label>
+                <select class="login__label form-control" asp-for="CategoryId">
+                    <option selected disabled>--Select Category--</option>
+                    @foreach (var catList in ViewBag.Category)
+                    {
+                        <option value="@catList.CatId">@catList.CatName</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <div class="row justify-content-around">
+                    <div class="mb-3 mt-3 col-4">
+                        <label for="profile-picture1" class="profile-picture-container">
+                            <div class="profile-picture-preview">
+                                <img id="profile-picture-preview1" src="@Url.Content(ImageSource)" alt="Profile Picture">
+                            </div>
+                            <input type="file" asp-for="ProductPicture" id="profile-picture1" class="profile-picture-input" accept="image/*">
+                        </label>
+                    </div>
+                    <div class="mb-3 mt-3 col-4">
+                        <label for="profile-picture2" class="profile-picture-container">
+                            <div class="profile-picture-preview">
+                                <img id="profile-picture-preview2" src="@Url.Content(ImageSource1)" alt="Profile Picture">
+                            </div>
+                            <input type="file" value="@Html.DisplayFor(x=>x.ProductPicture1)" asp-for="ProductPicture1" id="profile-picture2" class="profile-picture-input" accept="image/*">
+                        </label>
+                    </div>
+                    <div class="mb-3 mt-3 col-4">
+                        <label for="profile-picture3" class="profile-picture-container">
+                            <div class="profile-picture-preview">
+                                <img id="profile-picture-preview3" src="@Url.Content(ImageSource2)" alt="Profile Picture">
+                            </div>
+                            <input type="file" asp-for="ProductPicture2" id="profile-picture3" class="profile-picture-input" accept="image/*">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="login__label">Auction End Date</label>
+                <input asp-for="AuctionEndDate" type="date" class="login__input" aria-required="true" value="@Model.AuctionEndDate.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="AuctionEndDate" class="text-danger"></span>
+            </div>
+
+
+            <div>
+                <label class="login__label">Min Price</label>
+                <input asp-for="MinBidPrice" type="number" class="login__input" aria-required="true" placeholder="Enter Minimum Bid Price" min="1" />
+                <span asp-validation-for="MinBidPrice" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div>
+            <button type="submit" class="login__button">Edit</button>
+        </div>
+
+    </form>
+
+</div>

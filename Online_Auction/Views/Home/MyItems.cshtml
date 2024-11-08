@@ -1,0 +1,89 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_FrontHeader.cshtml";
+}
+
+@model IEnumerable<Online_Auction.Models.Products>
+
+@{
+    var tempMessage = TempData["temp"] as string;
+}
+
+<section class="section pt-5" id="products">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <h2>My Items For Sale</h2>
+                    @if (!string.IsNullOrEmpty(tempMessage))
+                    {
+                        <div class="alert alert-success mt-4" role="alert">
+                            @tempMessage
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        @if (Model.Any())
+        {
+            <div class="row">
+                @foreach (var Items in Model)
+                {
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="item">
+                            @{if(Items.ProductStatus == "active")
+                            {
+                                    <div class="tag1 back-success">@Html.DisplayFor(x => Items.ProductStatus)</div>
+                            }
+                                else if (Items.ProductStatus == "non-active")
+                                {
+                                    <div class="tag1 back-info">Pending</div>
+                                }
+                                else if (Items.ProductStatus == "reject")
+                                {
+                                    <div class="tag1 back-danger">@Html.DisplayFor(x => Items.ProductStatus)</div>
+                                }
+                                else if (Items.ProductStatus == "sold")
+                                {
+                                    <div class="tag1 back-success">@Html.DisplayFor(x => Items.ProductStatus)</div>
+                                }
+                            }
+                            
+                            
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a asp-action="SingleProduct" asp-controller="Home" asp-route-id="@Items.ProductId"><i class="fa fa-eye"></i></a></li>
+                                        <li><a asp-action="EditItem" asp-controller="Home" asp-route-id="@Items.ProductId"><i class="fa fa-edit"></i></a></li>
+                                        <li><a asp-action="DeleteItem" asp-controller="Home" asp-route-id="@Items.ProductId"><i class="fa fa-trash-o"></i></a></li>
+                                        <li><a asp-action="BidHistory" asp-controller="Home" asp-route-id="@Items.ProductId"><i class="fa fa-th-list"></i></a></li>
+                                    </ul>
+                                </div>
+                                <img src="~/images/@Html.DisplayFor(x => Items.ProductImage)" alt="" class="allproductImage">
+                            </div>
+                            <div class="down-content d-flex justify-content-between">
+                                <h4>@Html.DisplayFor(x => Items.ProductTitle)</h4>
+                                <span>@Html.DisplayFor(x => Items.MinBidPrice)</span>
+                            </div>
+                            <div class="description">
+                                @Html.DisplayFor(x => Items.ProductDescription)
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>You have Currently No Items for Sale</p>
+                </div>
+            </div>
+        }
+    </div>
+</section>

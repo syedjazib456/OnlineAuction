@@ -1,0 +1,59 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Online_Auction.Models.MergeCatModel;
+@{
+    var tempMessage = TempData["message"] as string;
+}
+
+<div class="main-panel">
+    <div class="content-wrapper">
+
+        @if (!string.IsNullOrEmpty(tempMessage))
+        {
+            <div class="alert alert-danger mt-4" role="alert">
+                @tempMessage
+            </div>
+        }
+
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-center" style="font-weight:900;">Merge Category</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="forms-sample" action="@Url.Action("MergeCat", "Admin")" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Category Name :</label>
+                                <input type="text" readonly class="form-control" value="@Model.MCategory.CatName" placeholder="Enter Category Name">
+                                <input type="number" name="cat1" value="@Model.MCategory.CatId" hidden />
+                            </div>
+                            <div class="form-group d-flex justify-content-center">
+                                <h4>Merge Into &darr;</h4>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" name="cat2" required>
+                                    <option selected disabled>--Select Category--</option>
+                                    @foreach(var list in Model.CategoriesList)
+                                    {
+                                        <option value="@list.CatId">@list.CatName</option>
+                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Merge</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

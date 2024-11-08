@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Online_Auction.Models.UsersListViewModel>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <form method="get" class="d-flex">
+                    <input type="text" placeholder="Search User by Email" name="seacrh" class="form-control" style="border-radius: 15px 0px 0px 15px;" />
+                    <input type="submit" value="Search" class="btn btn-primary" style="border-radius: 0px 15px 15px 0px;" />
+                </form>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Users</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table table-hover table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Items For Sale</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach(var list in Model){
+                                            <tr>
+                                                    <td><a asp-action="GetAllInfo" asp-controller="Admin" target="_blank" asp-route-id="@list.Users.Id">@Html.DisplayFor(x => list.Users.FullName)</a></td>
+                                                    <td>@Html.DisplayFor(x => list.Users.Email)</td>
+                                                    <td>@Html.DisplayFor(x => list.UserProductCount)</td>
+                                                    <td>@Html.DisplayFor(x => list.Users.Status)</td>
+                                                 <td><a asp-action="MarkFraud" asp-controller="Admin" asp-route-id="@list.Users.Id" class="btn btn-danger btn-sm">Mark as Fraud</a></td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

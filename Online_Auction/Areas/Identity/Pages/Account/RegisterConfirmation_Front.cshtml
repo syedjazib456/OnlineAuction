@@ -1,0 +1,57 @@
+﻿@page
+@model RegisterConfirmationModelFront;
+
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-5 mx-auto">
+                        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                            <div class="brand-logo d-flex justify-content-center">
+                                <img src="~/images/namewithlogo-removebg-preview.png" alt="logo">
+                            </div>
+                            <h6 class="font-weight-light text-center">Confirmation Email Sent Please Check your Email to Confirm</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+</body>
+
+</html>
+
+
+
+@*@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+<p>
+    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
+    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+</p>
+    }
+    else
+    {
+<p>
+        Please check your email to confirm your account.
+</p>
+    }
+}*@
+

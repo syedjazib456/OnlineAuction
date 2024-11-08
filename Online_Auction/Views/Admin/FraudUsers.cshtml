@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Online_Auction.Models.Register>;
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Users</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table table-hover table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var list in Model)
+                                            {
+                                                <tr>
+                                                    <td><a asp-action="GetAllInfo" asp-controller="Admin" target="_blank" asp-route-id="@list.Id">@Html.DisplayFor(x => list.FullName)</a></td>
+                                                    <td>@Html.DisplayFor(x => list.Email)</td>
+                                                    <td>@Html.DisplayFor(x => list.Status)</td>
+                                                    <td><a asp-action="MarkASActive" asp-controller="Admin" asp-route-id="@list.Id" class="btn btn-success btn-sm">Active</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

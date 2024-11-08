@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_FrontHeader.cshtml";
+}
+@model IEnumerable<Online_Auction.Models.Bids>;
+<section class="section pt-5" id="product">
+    <div class="container">
+        <div class="row">
+            <h1>Bid History</h1>
+        </div>
+    </div>
+<div class="container mt-3">
+    <div class="row">
+            <table class="table table-hover">
+
+@if (Model.Any())
+{
+        <thead class="thead-dark">
+            <tr>
+                <th>User</th>
+                <th>Bid Amount</th>
+                <th>Time Stamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th><a asp-action="Profile" asp-controller="Home" asp-route-id="@item.User.Id" class="text-dark">@item.User.FullName</a></th>
+                    <td>@item.BidAmount</td>
+                    <td>@item.TimeStamp</td>
+                </tr>
+            }
+        </tbody>
+}
+else
+{
+    <h4>No Bids yet.</h4>
+}
+            </table>
+
+
+            </div>
+</div>
+</section>

@@ -1,0 +1,229 @@
+﻿@{
+    Layout = "~/Views/Shared/_FrontHeader.cshtml";
+}
+@model Online_Auction.Models.GetProductsForHomePage
+
+    <div class="main-banner" id="top">
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <h2>Categories</h2>
+                </div>
+            </div>
+        </div>
+            <div class="row mt-5">
+              @*   <div class="col-lg-12">
+                    <div class="left-content">
+                        <div class="thumb">
+                            <div class="inner-content">
+                                <h4>We Are Hexashop</h4>
+                                <span>Awesome, clean &amp; creative HTML5 Template</span>
+                                <div class="main-border-button">
+                                    <a href="#">Purchase Now!</a>
+                                </div>
+                            </div>
+                            <img src="~/images/left-banner-image.jpg" alt="">
+                        </div>
+                    </div>
+                </div> *@
+                <div class="col-lg-12">
+                    <div class="right-content">
+                        <div class="row">
+                        @foreach (var catList in Model.CategoryWithCount)
+                        {
+                            if(catList.ProductCount > 0)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="right-first-image">
+                                        <div class="thumb">
+                                            <div class="tag">Items For Sale</div>
+                                            <div class="inner-content">
+                                                <h4>@Html.DisplayFor(x => catList.Category.CatName)</h4>
+                                            </div>
+                                            <div class="hover-content">
+                                                <div class="inner">
+                                                    <h4>@Html.DisplayFor(x => catList.Category.CatName)</h4>
+                                                    <p>@Html.DisplayFor(x => catList.Category.CatDescription)</p>
+                                                    <div class="main-border-button">
+                                                        <a asp-action="CatItems" asp-controller="Home" asp-route-id="@catList.Category.CatId">discover more</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="~/images/@Html.DisplayFor(x=>catList.Category.CatImg)">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-4">
+                                    <div class="right-first-image">
+                                        <div class="thumb">
+                                            <div class="inner-content">
+                                                <h4>@Html.DisplayFor(x => catList.Category.CatName)</h4>
+                                            </div>
+                                            <div class="hover-content">
+                                                <div class="inner">
+                                                    <h4>@Html.DisplayFor(x => catList.Category.CatName)</h4>
+                                                    <p>@Html.DisplayFor(x => catList.Category.CatDescription)</p>
+                                                    <div class="main-border-button">
+                                                        <a asp-action="CatItems" asp-controller="Home" asp-route-id="@catList.Category.CatId">discover more</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="~/images/@Html.DisplayFor(x=>catList.Category.CatImg)">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+
+    <!-- ***** Men Area Starts ***** -->
+    <section class="section" id="men">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-heading">
+                        <h2>Latest Items</h2>
+                        <span>Details to details is what makes Hexashop different from the other themes.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="men-item-carousel">
+                        <div class="owl-men-item owl-carousel">
+                        @foreach (var LatestItem in Model.LatestItems)
+                        {
+                            <div class="item">
+                                <a asp-action="SingleProduct" asp-controller="Home" asp-route-id="@LatestItem.ProductId">
+                                <div class="thumb">
+                                    <img src="~/images/@Html.DisplayFor(x=>LatestItem.ProductImage)" alt="" class="carousel_img">
+                                </div>
+                                </a>
+                                <div class="down-content d-flex justify-content-between">
+                                    <h4>@Html.DisplayFor(x => LatestItem.ProductTitle)</h4>
+                                    <span>@Html.DisplayFor(x => LatestItem.CurrBidPrice)</span>
+                                </div>
+                                <div class="description">
+                                    @Html.DisplayFor(x => LatestItem.ProductDescription)
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Men Area Ends ***** -->
+
+    <!-- ***** Women Area Starts ***** -->
+    <section class="section" id="women">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-heading">
+                        <h2>Highest Bided Item</h2>
+                        <span>Details to details is what makes Hexashop different from the other themes.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="women-item-carousel">
+                        <div class="owl-women-item owl-carousel">
+                        @foreach (var HighBidItem in Model.TopBidedItems)
+                        {
+                            <div class="item">
+                                <a asp-action="SingleProduct" asp-controller="Home" asp-route-id="@HighBidItem.ProductId">
+                                <div class="thumb">
+                                    <img src="~/images/@Html.DisplayFor(x=>HighBidItem.ProductImage)" alt="" class="carousel_img">
+                                </div>
+                                </a>
+                                <div class="down-content d-flex justify-content-between">
+                                    <h4>@Html.DisplayFor(x => HighBidItem.ProductTitle)</h4>
+                                    <span>@Html.DisplayFor(x => HighBidItem.CurrBidPrice)</span>
+                                </div>
+                                <div class="description">
+                                    @Html.DisplayFor(x => HighBidItem.ProductDescription)
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Women Area Ends ***** -->
+
+
+    <!-- ***** Explore Area Starts ***** -->
+    <section class="section" id="explore">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="left-content">
+                        <h2>Explore Our Products</h2>
+                    <span>
+                        You are allowed to bit there items . Description: The Grand aucation items  is a versatile wearable device ,cars , bikes and sport items  to integrate seamlessly into your daily life. It features a vibrant touchscreen display, fitness tracking capabilities, and connectivity options to keep you organized and connected on the go.
+                    </span>
+                        <div class="quote">
+                            <i class="fa fa-quote-left"></i><p>get the best items with grand aucation.</p>
+                        </div>
+                    <p>
+                        Description:The Grand aucation items  is a versatile wearable device ,cars , bikes and sport items  to integrate seamlessly into your daily life. It features a vibrant touchscreen display, fitness tracking capabilities, and connectivity options to keep you organized and connected on the go.
+                    </p>
+                        <div class="main-border-button">
+                            <a asp-action="AllProducts" asp-controller="Home">Discover More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="right-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="leather">
+                                <h4>Royal Villas</h4>
+                                    <span>royal villas</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="first-image">
+                                <img src="~/images/37d35379-9c73-4a13-b6d2-d85cf1129f8a images.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="second-image">
+                                <img src="~/images/a3360b49-c800-4087-a3ed-35ce9c865c51 bugatti-chiron-1500.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="types">
+                                <h4>Bugatti Chiron</h4>
+                                <span>Fastest Cars</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Explore Area Ends ***** -->
+
+ 

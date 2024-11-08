@@ -1,0 +1,551 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Register> SignInManager
+@inject UserManager<Register> UserManager
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Hexashop Ecommerce HTML CSS Template</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="~/css/font-awesome.css">
+
+    <link rel="stylesheet" href="~/css/templatemo-hexashop.css">
+
+    <link rel="stylesheet" href="~/css/owl-carousel.css">
+
+    <link rel="stylesheet" href="~/css/lightbox.css">
+
+    <link rel="stylesheet" href="~/css/nav.css">
+    <link rel="icon" href="~/images/onlylogo-removebg-preview.png" />
+    <!--
+
+    TemplateMo 571 Hexashop
+
+    https://templatemo.com/tm-571-hexashop
+
+    -->
+</head>
+<style>
+    .tag {
+        background-color: red;
+        color: white;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 15px;
+        z-index: 2;
+    }
+
+    .tag1 {
+        position: absolute;
+        top: 10px;
+        right: 30px;
+        color: black;
+        z-index: 99;
+        padding: 5px 15px;
+    }
+
+    .back-danger {
+        background-color: red;
+    }
+
+    .back-success {
+        background-color: greenyellow;
+    }
+
+    .back-info {
+        background-color: yellow;
+    }
+
+    .item .down-content {
+        padding: 20px 20px;
+        position: relative;
+        z-index: 3;
+        background-color: #fff;
+    }
+
+    .allproductImage{
+        height:300px;
+    }
+    .description {
+        padding: 0px 20px 10px 20px;
+        position: relative;
+        z-index: 3;
+        font-size: 13px;
+        margin-top: -20px;
+        overflow: hidden;
+        height: 43px;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        word-wrap: break-word;
+        background-color: #fff;
+    }
+
+    #products .item .thumb img {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .carousel_img {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .thumbnail_images ul {
+        list-style: none;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+        .thumbnail_images ul li {
+            margin: 5px;
+            padding: 10px;
+            border: 2px solid #eee;
+            cursor: pointer;
+            width:150px;
+            height:150px;
+            transition: all 0.5s;
+        }
+
+            .thumbnail_images ul li:hover {
+                border: 2px solid #000;
+            }
+
+    .main_image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+        height: 400px;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .vertical-line {
+        border-left: 2px solid #eee;
+    }
+    .total {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 25px;
+        margin-top: 25px;
+    }
+
+        .total input {
+            font-size: 20px;
+            padding: 7px 14px;
+            width: 50%;
+            border: 1px solid #444;
+            color: #aaa !important;
+            border-radius: 5px;
+        }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+    }
+
+        .total .main-border-button {
+            width: 40%;
+            padding: 10px 10px;
+            border: 1px solid black;
+            color: #2a2a2a;
+            border-radius:5px;
+            transition:all linear 0.3s;
+        }
+
+            .total .main-border-button:hover{
+                background-color:black;
+                color:white;
+            }
+
+            .total .main-border-button a {
+                border-color: #2a2a2a;
+                color: #2a2a2a;
+                text-align: center;
+                width: 100%;
+            }
+
+    .SellAnItem_Div{
+        display:flex;
+        padding-top: 150px;
+    }
+
+
+    .profile-picture-container {
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        border: 1px solid hsl(230, 25%, 80%);
+        border-radius: .5rem;
+        width: 100%;
+        height: 150px; /* Set a fixed height for the container */
+    }
+
+    .profile-picture-input {
+        display: none;
+    }
+
+    .profile-picture-preview {
+        overflow: hidden;
+        height: 100%; /* Set a fixed height for the preview */
+    }
+
+        .profile-picture-preview img {
+            width: 100%;
+            height: 100%; /* Let the browser automatically calculate the height to maintain aspect ratio */
+            object-fit: contain;
+        }
+
+    .unread-notification{
+        font-weight:900;
+    }
+
+
+    .rating-box {
+        /* padding: 25px 50px; */
+        background-color: white;
+        display:flex;
+        justify-content:center;
+        margin-top:13px;
+    }
+
+        .rating-box h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .rating-box .stars {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+    .stars i {
+        font-size: 26px;
+        color: #b5b8b1;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+        .stars i.active {
+            color: #ffb851;
+            transform: scale(1.2);
+        }
+
+    .delete-notification-btn{
+        background-color: transparent;
+        border:none;
+        width:50px;
+        height:50px;
+    }
+
+    .notification-item-wrapper{
+        border-bottom:1px solid Black;
+        border-radius:10px;
+    }
+</style>
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+    <!-- ***** Header Area Start ***** -->
+    <header class="header background-header" id="header">
+        <nav class="nav container">
+            <a asp-action="Index" asp-controller="Home" class="nav__logo"><img src="~/images/side-logo.png" width="180px" /></a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a asp-action="Index" asp-controller="Home" class="nav__link">Home</a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a asp-action="AllProducts" asp-controller="Home" class="nav__link">Latest Items</a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a asp-action="AboutUs" asp-controller="Home" class="nav__link">About Us</a>
+                    </li>
+
+                </ul>
+
+                <!-- Close button -->
+                <div class="nav__close" id="nav-close">
+                    <i class="ri-close-line"></i>
+                </div>
+            </div>
+
+            <div class="nav__actions">
+                <!-- Search button -->
+                <i class="ri-search-line nav__search" id="search-btn"></i>
+
+                @{
+                    var userId = UserManager.GetUserId(User);
+                    if (SignInManager.IsSignedIn(User))
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+                            <a class="nav__link" asp-area="Identity" asp-page="/Account/Login_Front" style="cursor:pointer;">Login</a>
+                        }
+                        else if (User.IsInRole("User"))
+                        {
+                            <div class="dropdown">
+                                <i class="ri-notification-3-line nav__login dropbtn"></i>
+                                <div class="dropdown-content" style="min-width:400px;" id="notification">
+                                    
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <i class="ri-user-line nav__login dropbtn"></i>
+                                <div class="dropdown-content">
+                                    <a asp-action="Profile" asp-controller="Home" asp-route-id="@userId">Profile</a>
+                                    <a asp-action="SellAnItem" asp-controller="Home">Sell an Item</a>
+                                    <a asp-action="MyItems" asp-controller="Home">My Items</a>
+                                    <a href="#" id="logout_front">Logout</a>
+                                    <form class="form-inline" id="logout_form_front" asp-area="Identity" asp-page="/Account/Logout_Front" method="post"></form>
+                                </div>
+                            </div>
+                        }
+                    }
+                   else
+                    {
+                            <a class="nav__link" asp-area="Identity" asp-page="/Account/Login_Front" style="cursor:pointer;">Login</a>
+                    }
+                }
+              
+                <!-- Toggle button -->
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- ***** Header Area End ***** -->
+    <!--==================== SEARCH ====================-->
+    <div class="search" id="search">
+        <form asp-action="SearchItem" asp-controller="Home" method="get" class="search__form">
+            <i class="ri-search-line search__icon"></i>
+            <input type="search" name="q" placeholder="What are you looking for?" class="search__input">
+            <button type="submit">GO</button>
+        </form>
+
+        <i class="ri-close-line search__close" id="search-close"></i>
+    </div>    
+
+    @RenderBody()
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="first-item">
+                        <div class="logo d-flex justify-content-start">
+                            <img src="~/images/side-logo-white.png" alt="Grand Auction" width="200px">
+                        </div>
+                        <ul>
+                            <li><a href="#">Aptech Learning NorthKarachi, Karachi</a></li>
+                            <li><a href="#">muhammadumair25591@gmail.com</a></li>
+                            <li><a href="#">0331-8094994</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a asp-action="Index" asp-controller="Home">Homepage</a></li>
+                        <li><a asp-action="AllProducts" asp-controller="Home">Latest Items</a></li>
+                        <li><a asp-action="AboutUs" asp-controller="Home">About Us</a></li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h4>Help &amp; Information</h4>
+                    <ul>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">FAQ's</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Tracking ID</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-12">
+                    <div class="under-footer">
+                        <p>
+                            Copyright © Grand Auction Associate 
+
+                        </p>
+                        <ul>
+                            <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </body>
+    </html>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.dropbtn').click(function () {
+            // Close all dropdowns except the one clicked
+            $('.dropdown-content').not($(this).next('.dropdown-content')).hide();
+
+            // Toggle the dropdown menu of the clicked element
+            $(this).next('.dropdown-content').toggle();
+        });
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var today = new Date().toISOString().slice(0, 10);
+        document.getElementById("auctionEndDate").value = today;
+        document.getElementById("auctionStartDate").value = today;
+
+    });
+
+    document.getElementById("logout_front").addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("logout_form_front").submit();
+    });
+
+    function changeImage(element) {
+        var main_prodcut_image = document.getElementById('main_product_image');
+        main_prodcut_image.src = element.src;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get references to the file input and image elements
+        var fileInputs = document.querySelectorAll(".profile-picture-input");
+
+        // Add event listener to each file input
+        fileInputs.forEach(function (fileInput) {
+            fileInput.addEventListener("change", function () {
+                // Get the corresponding preview image element
+                var previewImage = this.closest(".profile-picture-container").querySelector("img");
+
+                // Check if any file is selected
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    // Set up the FileReader to read the selected file
+                    reader.onload = function (e) {
+                        // Update the src attribute of the preview image with the data URL
+                        previewImage.src = e.target.result;
+                    }
+
+                    // Read the selected file as a data URL
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    });
+
+
+    const stars = document.querySelectorAll('.stars i');
+    const starsNone = document.querySelector('.rating-box');
+
+    // ---- ---- Stars ---- ---- //
+    stars.forEach((star, index1) => {
+        star.addEventListener('click', () => {
+            stars.forEach((star, index2) => {
+                // Only activate stars with index greater than or equal to clicked one
+                if (index1 >= index2) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        });
+    });
+
+    $('#SubmitRating').click(() => {
+
+        const selectedIndex = Array.from(stars).findLastIndex(star => star.classList.contains('active'));
+
+        if (selectedIndex >= 0) {
+
+            const productId = $('#SubmitRating').attr('data-productId');
+            const userId = $('#SubmitRating').attr('data-userId');
+
+            submitRating(productId, userId, selectedIndex + 1);
+        } else {
+            console.error('No star selected');
+        }
+    });
+
+    function submitRating(productId, userId, rating) {
+        console.log('Submitting rating:', rating, 'for productId:', productId, 'by userId:', userId);
+
+        $.ajax({
+            url: '/Home/SubmitRating',
+            method: 'POST',
+            data: {
+                productId: productId,
+                userId: userId,
+                rating: rating
+            },
+            success: function (response) {
+                console.log('Rating submitted successfully:', response);
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                console.error('Failed to submit rating:', error);
+                // Handle error response if needed
+            }
+        });
+    }
+
+</script>
+<!-- Bootstrap -->
+<script src="~/js/popper.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+
+<!-- Plugins -->
+<script src="~/js/owl-carousel.js"></script>
+<script src="~/js/accordions.js"></script>
+<script src="~/js/datepicker.js"></script>
+<script src="~/js/scrollreveal.min.js"></script>
+<script src="~/js/waypoints.min.js"></script>
+<script src="~/js/jquery.counterup.min.js"></script>
+<script src="~/js/imgfix.min.js"></script>
+<script src="~/js/slick.js"></script>
+<script src="~/js/lightbox.js"></script>
+<script src="~/js/isotope.js"></script>
+
+<!-- Global Init -->
+<script src="~/js/custom.js"></script>
+<script src="~/js/nav.js"></script>
+<script src="~/js/site.js"></script>
